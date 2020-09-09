@@ -1,0 +1,37 @@
+1-The client opens a connection with the server and informs the server whether it wants to download or upload a file using a header
+
+2-If the client wants to download a file then 
+	2.1-The header will be as the following:
+		download[one space][file name][Line Feed]
+	2.2-Upon receiving this header, the server searches for the specified file
+	2.3-If the file is not found then the server shall reply with a header as the following:
+		NOT[one space]FOUND[Line Feed]		
+	2.4-If the file is found then the server shall reply with a header as the following:
+		OK[one space][file size][Line Feed]		
+	2.5-After sending the header, the server shall send the actual bytes that make the requested file
+
+3-If the client wants to upload a file then 
+	3.1-The header will be as the following:
+		upload[one space][file name][one space][file size][Line Feed]
+	3.2-After sending the header, the client would send the actual bytes that make the file
+	3.3- If the file already exists it is overwritten, or created if it does not exist, then the server sends a reply with a header as the following:
+		OK[Line Feed]
+
+4- If the client wants to delete a file then
+	4.1- The header will be as the following:
+		delete[one space][file name][Line Feed]
+	4.2- Upon receiving the header, if the file exists it is deleted and the server sends a reply with a header as the following:
+		OK[Line Feed]
+	4.3- Otherwise, if the file does not exist the server sends a reply with a header as the following:
+ 		NOT[one space]FOUND[Line Feed]
+
+5- If the client wants to pause download of a file then
+	5.1- The header will be as the following:
+		pause[Line Feed]
+	5.2- Upon receiving the header, the server stops from sending bytes of the actual file
+
+6- If the client wants to resume download of a file then
+	5.1- The header will be as the following:
+		resume[Line Feed]
+	5.2- Upon receiving the header, the server resumes sending the bytes that makes the file
+	
